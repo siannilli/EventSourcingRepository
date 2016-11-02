@@ -8,7 +8,7 @@ namespace EventSourcingStoreBase.Events
 {
     public class BaseEvent : IEvent
     {
-        public BaseEvent(Guid eventId, ulong version)
+        public BaseEvent(Guid eventId, Guid sourceId, ulong version)
         {
             this.EventId = eventId;
             this.Version = version;

@@ -12,13 +12,14 @@ namespace SpotCharterDomain.Events
 {
     public class SpotCharterCreated : BaseEvent
     {
-        public SpotCharterCreated(Guid eventId, 
+        public SpotCharterCreated(Guid eventId,
+            Guid spotId,
             ulong version,
             DateTime charterpartyDate,
             Counterparty counterparty,
             Vessel vessel, 
             CargoQuantity minimumQuantity) 
-            : base(eventId, version)
+            : base(eventId, spotId, version)
         {
 
         }

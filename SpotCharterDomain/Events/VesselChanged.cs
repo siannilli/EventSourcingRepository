@@ -8,9 +8,9 @@ using SharedDomainsObjects.Entities;
 
 namespace SpotCharterDomain.Events
 {
-    public class UpdateVessel : BaseEvent
+    public class VesselChanged : BaseEvent
     {
-        public UpdateVessel(Guid eventId, ulong version, Vessel vessel) : base(eventId, version)
+        public VesselChanged(Guid eventId, Guid spotId, ulong version, Vessel vessel) : base(eventId, spotId, version)
         {
             this.Vessel = vessel;
         }

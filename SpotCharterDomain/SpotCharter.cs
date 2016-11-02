@@ -19,7 +19,8 @@ namespace SpotCharterDomain
             : base(id)
         {
             this.Handles<SpotCharterCreated>(OnSpotCharterCreated);
-
+            this.Handles<VesselChanged>(OnVesselChanged);
+            this.Handles<DemurrageRateChanged>(OnDemurrageRateChanged);
         }
 
         public SpotCharter(Guid id, DateTime charterpartyDate, Counterparty counterparty, Vessel vessel)
@@ -49,7 +50,28 @@ namespace SpotCharterDomain
 
         public Counterparty ShipOwner { get; private set; }
 
+        public CargoQuantity MinimumQuantity { get; private set; }
 
+        #region Domain event handlers
+
+        private void OnSpotCharterCreated(SpotCharterCreated @event)
+        {
+            this.CharterpartyDate = @event.CharterpartyDate;
+            this.Vessel = @event.Vessel;
+            this.MinimumQuantity  = @event.MinimumQuantity;
+        } 
+        
+        private void OnVesselChanged(VesselChanged @event)
+        {
+            this.Vessel = @event.Vessel;
+        }
+
+        private void OnDemurrageRateChanged(DemurrageRateChanged @event)
+        {
+            
+        }
+
+        #endregion
 
     }
 }
