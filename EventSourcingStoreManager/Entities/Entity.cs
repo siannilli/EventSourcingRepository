@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedDomainsObjects.Entities
+namespace BaseDomainObjects.Entities
 {
-    public abstract class BaseEntity
+    public abstract class Entity<T>
     {
-        public Guid Id { get; private set; }
+        public T Id { get; protected set; }
 
-        public BaseEntity(Guid id)
+        public Entity(T id)
         {
             this.Id = id;
         }
@@ -18,8 +18,8 @@ namespace SharedDomainsObjects.Entities
         public override bool Equals(object obj)
         {
             return (obj != null
-                && obj is BaseEntity
-                && this.Id.Equals(((BaseEntity)obj).Id)) || base.Equals(obj);
+                && obj is Entity<T>
+                && this.Id.Equals(((Entity<T>)obj).Id)) || base.Equals(obj);
         }
 
         public override int GetHashCode()

@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaseDomainObjects.Entities;
+using SharedShippingDomainsObjects.ValueObjects;
 
-namespace SharedDomainsObjects.Entities
+namespace SharedShippingDomainsObjects.Entities
 {
-    public class Counterparty: BaseEntity
+    public class Counterparty: Entity<CounterpartyId>
     {
         public string Name { get; private set; }
 
-        public Counterparty(Guid id, string name)
+        public Counterparty(CounterpartyId id, string name)
             : base(id)
         {
             this.Name = name;
+        }
+
+        public override string ToString()
+        {
+            return $"{this.Name}";
         }
     }
 }

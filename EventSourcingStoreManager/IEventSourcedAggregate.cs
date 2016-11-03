@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventSourcingStoreBase
+namespace BaseDomainObjects
 {
-    public interface IAggregate
+    public interface IEventSourcedAggregate<TIdentity>
     {
-        System.Guid Id { get; }
+        TIdentity Id { get; }
         IEnumerable<IEvent> Events { get; }
         ulong Version { get; }
     }

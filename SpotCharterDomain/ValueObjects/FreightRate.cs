@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SharedDomainsObjects.ValueObjects;
+using BaseDomainObjects.ValueObjects;
+using SharedShippingDomainsObjects.ValueObjects;
 
 namespace SpotCharterDomain.ValueObjects
 {
-    public class FreightRate: BaseValueObject<FreightRate>
+    public class FreightRate: ValueObject<FreightRate>
     {
         public FreightRate(decimal flat, decimal worldscale, Overage overage)
         {
             this.FreightCalculation = Enums.FreigthCalculation.WorldScale;
             this.Flat = flat;
             this.WorldScale = worldscale;
+
+            this.Value = this;
         }
 
         public FreightRate (decimal lumpsum)

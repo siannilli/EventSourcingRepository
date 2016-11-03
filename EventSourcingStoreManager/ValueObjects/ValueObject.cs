@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedDomainsObjects.ValueObjects
+namespace BaseDomainObjects.ValueObjects
 {
-    public abstract class BaseValueObject<T> : IEquatable<T>
+    public abstract class ValueObject<T> : IEquatable<T>
     {
+        public T Value { get; protected set; }
+
         bool IEquatable<T>.Equals(T other)
         {
             return this.Equals(other);
@@ -24,13 +26,14 @@ namespace SharedDomainsObjects.ValueObjects
         {
             bool hasSameValues = true;
             foreach (var prop in this.GetType().GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
-            {
+            {                
                 var propThis = prop.GetValue(this);
                 var propOther = prop.GetValue(other);
 
                 if (propThis != null)
                 {
-                    if (!propThis.Equals(propOther))
+                    // propThis can be a reference to this, entering in a circular reference loop
+                    if (propThis != this && !propThis.Equals(propOther))
                     {
                         hasSameValues = false;
                         break;
@@ -59,6 +62,11 @@ namespace SharedDomainsObjects.ValueObjects
             }
 
             return hashCode;
+        }
+
+        public override string ToString()
+        {
+            return this.Value?.ToString() ?? base.ToString();
         }
     }
 }

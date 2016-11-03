@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SharedDomainsObjects.ValueObjects;
+using SharedShippingDomainsObjects.ValueObjects;
+using BaseDomainObjects.Entities;
 
-namespace SharedDomainsObjects.Entities
+namespace SharedShippingDomainsObjects.Entities
 {
-    public class Vessel: BaseEntity
+    public class Vessel: Entity<VesselId>
     {
         public string IMONumber { get; private set; }
         public string Name { get; private set; }
@@ -17,32 +18,37 @@ namespace SharedDomainsObjects.Entities
         public string Flag { get; private set; }
         public string Owner { get; private set; }
 
-        public Vessel(Guid id, string imo, string name)
+        public Vessel(VesselId id, string imo, string name)
             : base(id)
         {
             this.IMONumber = imo;
             this.Name = name;
         }
 
-        public Vessel(Guid id, string imo, string name, string flag, string owner)
+        public Vessel(VesselId id, string imo, string name, string flag, string owner)
             : this(id, imo, name)
         {
             this.Flag = flag;
             this.Owner = owner;
         }
 
-        public Vessel(Guid id, string imo, string name, string flag, string owner, decimal dwt, decimal gwt)
+        public Vessel(VesselId id, string imo, string name, string flag, string owner, decimal dwt, decimal gwt)
             : this(id, imo, name, flag, owner)
         {
             this.DeadweightTonnage = dwt;
             this.GrossTonnage = gwt;
         }
 
-        public Vessel(Guid id, string imo, string name, decimal dwt, decimal gwt)
+        public Vessel(VesselId id, string imo, string name, decimal dwt, decimal gwt)
             : this(id, imo, name)
         {
             this.DeadweightTonnage = dwt;
             this.GrossTonnage = gwt;
+        }
+
+        public override string ToString()
+        {
+            return $"{this.Name}";
         }
     }
 }

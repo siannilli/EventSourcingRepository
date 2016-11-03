@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaseDomainObjects.Entities;
+using BaseDomainObjects.Exceptions;
 
-namespace EventSourcingStoreBase.Aggregates
+namespace BaseDomainObjects.Aggregates
 {
-    public class BaseAggregate : IAggregate
+    public class EventSourcedAggregate<TIdentity> : Entity<TIdentity>, IEventSourcedAggregate<TIdentity>
     {
         private readonly Dictionary<Type, Action<IEvent>> handlers = new Dictionary<Type, Action<IEvent>>();
         ulong version = 0;
+        
+        IList<IEvent> pendingEvents = new List<IEvent>();    
 
-        public Guid Id { get; private set; }
-        IList<IEvent> pendingEvents = new List<IEvent>();
 
-        public BaseAggregate(Guid id)
+        public EventSourcedAggregate(TIdentity id)
+            : base(id)
         {
-            this.Id = id;
+
         }
-
-        public BaseAggregate(Guid id, IEnumerable<IEvent> events)
-            : this(id)
+        public EventSourcedAggregate(TIdentity id, IEnumerable<IEvent> events)
+            : base(id)
         {
-            this.eventsHistory = events.ToArray();
+            this.ReplayEvents(events);
         }
                
         public void Handles<TEvent>(Action<TEvent> eventHandler) where TEvent : IEvent
@@ -30,7 +32,7 @@ namespace EventSourcingStoreBase.Aggregates
             this.handlers[typeof(TEvent)] = @event => eventHandler((TEvent)@event);
         } 
 
-        Guid IAggregate.Id
+        TIdentity IEventSourcedAggregate<TIdentity>.Id
         {
             get
             {
@@ -49,14 +51,26 @@ namespace EventSourcingStoreBase.Aggregates
             this.version = events.Max(e => e.Version);
         }
 
-        protected void PlayEvent(IEvent @event)
+        private void PlayEvent(IEvent @event)
         {
             var handler = this.handlers[@event.GetType()];
             handler.Invoke(@event);
             this.pendingEvents.Add(@event);
         }
 
-        IEnumerable<IEvent> IAggregate.Events
+        protected void UpdateAggregate(IEvent @event)
+        {
+            if (@event.Version < this.version)
+                throw new InvalidAggregateVersionException();
+
+            this.PlayEvent(@event);
+            this.pendingEvents.Add(@event);           
+                         
+        } 
+
+        public ulong Version { get { return this.version; } }
+
+        IEnumerable<IEvent> IEventSourcedAggregate<TIdentity>.Events
         {
             get
             {
@@ -64,7 +78,7 @@ namespace EventSourcingStoreBase.Aggregates
             }
         }
 
-        ulong IAggregate.Version
+        ulong IEventSourcedAggregate<TIdentity>.Version
         {
             get
             {
@@ -75,9 +89,9 @@ namespace EventSourcingStoreBase.Aggregates
         public override bool Equals(object obj)
         {
             return (obj != null 
-                && obj is BaseAggregate
-                && this.Id.Equals(((BaseAggregate)obj).Id))
-                && this.version.Equals(((IAggregate)obj).Version)
+                && obj is EventSourcedAggregate<TIdentity>
+                && this.Id.Equals(((IEventSourcedAggregate<TIdentity>)obj).Id))
+                && this.version.Equals(((IEventSourcedAggregate<TIdentity>)obj).Version)
                 || base.Equals(obj);
         }
 

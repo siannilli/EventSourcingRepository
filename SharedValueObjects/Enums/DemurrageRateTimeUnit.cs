@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedDomainsObjects.Enum
+namespace SharedShippingDomainsObjects.Enums
 {
-    public enum DemurrageRateInterval
+    public enum DemurrageRateTimeUnit
     {
         Hour,
         Day

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaseDomainObjects.ValueObjects;
 
-namespace SharedDomainsObjects.ValueObjects
+namespace SharedShippingDomainsObjects.ValueObjects
 {
-    public class CostAmount: BaseValueObject<CostAmount>
+    public class CostAmount: ValueObject<CostAmount>
     {
 
         public Currency Currency { get; private set; }
@@ -16,6 +17,8 @@ namespace SharedDomainsObjects.ValueObjects
         {
             this.Currency = currency;
             this.Amount = amount;
+
+            this.Value = this;
         }
 
         public override string ToString()

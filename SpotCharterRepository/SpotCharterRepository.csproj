@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EventSourcingStoreManager\EventSourcingStoreBase.csproj">
+    <ProjectReference Include="..\EventSourcingStoreManager\BaseDomainObjects.csproj">
       <Project>{2e328522-d4c6-4449-a383-ad140e5d345e}</Project>
-      <Name>EventSourcingStoreBase</Name>
+      <Name>BaseDomainObjects</Name>
     </ProjectReference>
     <ProjectReference Include="..\SpotCharterDomain\SpotCharterDomain.csproj">
       <Project>{9ab64050-096f-4f2f-8c5e-f87d4b420ed8}</Project>

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaseDomainObjects.ValueObjects;
 
-namespace SharedDomainsObjects.ValueObjects
+namespace SharedShippingDomainsObjects.ValueObjects
 {
-    public class Currency: BaseValueObject<Currency>
+    public class Currency: ValueObject<Currency>
     {
         public string Code { get; private set; }
         public string Symbol { get; private set; }

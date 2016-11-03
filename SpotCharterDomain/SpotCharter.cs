@@ -3,38 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EventSourcingStoreBase;
-using EventSourcingStoreBase.Aggregates;
-using SharedDomainsObjects.ValueObjects;
-using SharedDomainsObjects.Entities;
+using BaseDomainObjects;
+using BaseDomainObjects.Aggregates;
+using SharedShippingDomainsObjects.ValueObjects;
+using SharedShippingDomainsObjects.Entities;
+using SharedShippingDomainsObjects.Enums;
 
 using SpotCharterDomain.Events;
 
 namespace SpotCharterDomain
 {
-    public class SpotCharter : BaseAggregate
+    public class SpotCharter : EventSourcedAggregate<SpotCharterId>
     {
 
-        public SpotCharter(Guid id)
-            : base(id)
+        private SpotCharter()
+            : base(new SpotCharterId(Guid.Empty))
         {
-            this.Handles<SpotCharterCreated>(OnSpotCharterCreated);
-            this.Handles<VesselChanged>(OnVesselChanged);
+            this.Handles<BillOfLadingChanged>(OnBillOfLadingChanged);
             this.Handles<DemurrageRateChanged>(OnDemurrageRateChanged);
             this.Handles<FreightRateChanged>(OnFreightRateChanged);
-
+            this.Handles<PortfolioChanged>(OnPortfolioChanged);
+            this.Handles<SpotCharterCreated>(OnSpotCharterCreated);
+            this.Handles<SpotCharterDeleted>(OnSpotCharterDeleted);
+            this.Handles<VesselChanged>(OnVesselChanged);
+            this.Handles<CharterpartyChanged>(OnCharterpartyChanged);
+            this.Handles<LaycanChanged>(OnLaycanChanged);
         }
 
-        public SpotCharter(Guid id, DateTime charterpartyDate, Counterparty counterparty, Vessel vessel)
-            : this(id)
+
+
+        public SpotCharter(SpotCharterId id)
+            : this()
         {
-            this.CharterpartyDate = charterpartyDate;
-            this.Counterparty = counterparty;
-            this.Vessel = vessel;
+            this.Id = id;
         }
 
-        public SpotCharter(Guid id, IEnumerable<IEvent> events )
-            :this(id)
+        public SpotCharter(SpotCharterCreated creationEvent)
+            : this()
+        {
+            this.UpdateAggregate(creationEvent);                
+        }
+
+        public SpotCharter(SpotCharterId id, IEnumerable<IEvent> events)
+            :this()
         {
             this.ReplayEvents(events);
         }
@@ -44,13 +55,13 @@ namespace SpotCharterDomain
 
         public DateRange Laycan { get; private set; }
 
-        public Vessel Vessel { get; private set; }
+        public VesselId VesselId { get; private set; }
+        public string VesselName { get; private set; }        
 
-        public Counterparty Counterparty { get; private set; }
+        public CounterpartyId CharterpartyId { get; private set; }
+        public string CharterpartyName { get; private set; }
         
         public BillOfLading BillOfLading { get; private set; }
-
-        public Counterparty ShipOwner { get; private set; }
 
         public CargoQuantity MinimumQuantity { get; private set; }
 
@@ -58,18 +69,80 @@ namespace SpotCharterDomain
 
         public DemurrageRate DemurrageRate { get; private set; }
 
+        public PortfolioId PortfolioId { get; private set; }
+        public string PortfolioDescription { get; private set; }
+
+        #region Aggregate Actions
+
+        public void UpdatePortfolio(PortfolioId newPortfolio)
+        {
+            this.UpdateAggregate(new PortfolioChanged(Guid.NewGuid(), this.Version + 1, this.Id, newPortfolio));
+        }
+
+        public void UpdateDemurrageRate(double laytimeLoad, 
+            double laytimeDischarge, 
+            double laytimeTotal,
+            CostAmount priceUnit,
+            DemurrageRateTimeUnit interval)
+        {
+            this.UpdateAggregate(new DemurrageRateChanged(Guid.NewGuid(), this.Id, this.Version, new DemurrageRate(laytimeLoad, laytimeDischarge, laytimeTotal, priceUnit, interval)));
+        }
+
+        public void UpdateVessel(Vessel vessel)
+        {
+            this.UpdateAggregate(new VesselChanged(Guid.NewGuid(), this.Version + 1, this.Id, vessel));
+        }
+
+        public void ChangeCharterparty(Counterparty counterparty)
+        {
+            this.UpdateAggregate(new CharterpartyChanged(Guid.NewGuid(), this.Version + 1, this.Id, counterparty));
+        }
+
+        public void UpdateBillOfLading(DateTime date, CargoQuantity quantity, string documentReference)
+        {
+            this.UpdateAggregate(new BillOfLadingChanged(Guid.NewGuid(), this.Version + 1, this.Id, date, quantity, documentReference));
+        }
+
+        public void  ChangeFreightRate(decimal flat, decimal worldScale, Enums.OverageType overageType, decimal overageValue)
+        {
+            this.UpdateAggregate(new FreightRateChanged(Guid.NewGuid(), this.Id, this.Version + 1,
+                new ValueObjects.FreightRate(flat, worldScale, new ValueObjects.Overage(overageType, overageValue))));
+        }
+
+        public void ChangeFreightRate(decimal lumpsum)
+        {
+            this.UpdateAggregate(new FreightRateChanged(Guid.NewGuid(), this.Id, this.Version + 1, new ValueObjects.FreightRate(lumpsum)));
+        }
+
+        public void ChangeFreightRate(decimal price, string uom, Enums.OverageType overageType, decimal overageValue)
+        {
+            this.UpdateAggregate(new FreightRateChanged(Guid.NewGuid(), this.Id, this.Version + 1, new ValueObjects.FreightRate(price, uom, new ValueObjects.Overage(overageType, overageValue))));
+        }
+
+        public void UpdateLaycan(DateTime from, DateTime to)
+        {
+            this.UpdateAggregate(new LaycanChanged(Guid.NewGuid(), this.Version + 1, this.Id, new DateRange(from, to)));
+        }
+
+        #endregion
+
         #region Domain event handlers
 
         private void OnSpotCharterCreated(SpotCharterCreated @event)
         {
+            this.Id = @event.SourceId;
             this.CharterpartyDate = @event.CharterpartyDate;
-            this.Vessel = @event.Vessel;
+            this.CharterpartyId = @event.Counterparty.Id;
+            this.CharterpartyName = @event.Counterparty.ToString();
+            this.VesselId = @event.Vessel.Id;
+            this.VesselName = @event.Vessel.Name;
             this.MinimumQuantity  = @event.MinimumQuantity;
         } 
         
         private void OnVesselChanged(VesselChanged @event)
         {
-            this.Vessel = @event.Vessel;
+            this.VesselId = @event.Vessel.Id;
+            this.VesselName = @event.Vessel.ToString();
         }
 
         private void OnDemurrageRateChanged(DemurrageRateChanged @event)
@@ -80,6 +153,33 @@ namespace SpotCharterDomain
         private void OnFreightRateChanged(FreightRateChanged @event)
         {
             this.FreightRate = @event.FreightRate;
+        }
+
+        private void OnSpotCharterDeleted(SpotCharterDeleted @event)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnPortfolioChanged(PortfolioChanged @event)
+        {
+            this.PortfolioId = @event.PorfolioId;
+        }
+
+        private void OnBillOfLadingChanged(BillOfLadingChanged @event)
+        {
+            this.BillOfLading = new BillOfLading(@event.Date, @event.Quantity, @event.DocumentReference);
+        }
+
+
+        private void OnCharterpartyChanged(CharterpartyChanged @event)
+        {
+            this.CharterpartyId = @event.Charterparty.Id;
+            this.CharterpartyName = @event.Charterparty.ToString();
+        }
+
+        private void OnLaycanChanged(LaycanChanged @event)
+        {
+            this.Laycan = @event.Laycan; ;
         }
 
         #endregion

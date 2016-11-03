@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaseDomainObjects.ValueObjects;
 
-namespace SharedDomainsObjects.ValueObjects
+namespace SharedShippingDomainsObjects.ValueObjects
 {
-    public class GeographicPoint: BaseValueObject<GeographicPoint>
+    public class GeographicPoint: ValueObject<GeographicPoint>
     {
         public decimal Latitude { get; private set; }
         public decimal Longitude { get; private set; }

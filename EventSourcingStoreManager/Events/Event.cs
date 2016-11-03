@@ -4,17 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventSourcingStoreBase.Events
+namespace BaseDomainObjects.Events
 {
-    public class BaseEvent : IEvent
+    public class Event : IEvent
     {
-        public BaseEvent(Guid eventId, Guid sourceId, ulong version)
+        public Event(Guid eventId, ulong version)
         {
             this.EventId = eventId;
             this.Version = version;
         }
 
-        public Guid SourceId { get; private set; }
+        public Event(Guid eventId, ulong version, string source)
+            : this(eventId, version)
+        {
+            this.Source = source;
+        }
+
         public Guid EventId { get; private set; }
         public ulong Version { get; private set; }
 
@@ -42,5 +47,15 @@ namespace EventSourcingStoreBase.Events
                 return this.Version;
             }
         }
+
+        string IEvent.Source
+        {
+            get
+            {
+                return this.Source;
+            }
+        }
+
+        public string Source { get; private set; }
     }
 }

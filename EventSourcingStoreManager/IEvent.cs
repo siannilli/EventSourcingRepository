@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventSourcingStoreBase
+namespace BaseDomainObjects
 {
     public interface IEvent
     {
         Guid Id { get; }
         string EventName { get; }
+        string Source { get; }        
         ulong Version { get; }
+
     }
 }

@@ -44,8 +44,10 @@
     <Compile Include="Enums\FreigthCalculation.cs" />
     <Compile Include="Enums\OverageType.cs" />
     <Compile Include="Events\BillOfLadingChanged.cs" />
+    <Compile Include="Events\CharterpartyChanged.cs" />
     <Compile Include="Events\DemurrageRateChanged.cs" />
     <Compile Include="Events\FreightRateChanged.cs" />
+    <Compile Include="Events\LaycanChanged.cs" />
     <Compile Include="Events\PortfolioChanged.cs" />
     <Compile Include="Events\SpotCharterCreated.cs" />
     <Compile Include="Events\SpotCharterDeleted.cs" />
@@ -57,13 +59,13 @@
     <Compile Include="ValueObjects\Overage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EventSourcingStoreManager\EventSourcingStoreBase.csproj">
+    <ProjectReference Include="..\EventSourcingStoreManager\BaseDomainObjects.csproj">
       <Project>{2e328522-d4c6-4449-a383-ad140e5d345e}</Project>
-      <Name>EventSourcingStoreBase</Name>
+      <Name>BaseDomainObjects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharedValueObjects\SharedDomainObjects.csproj">
+    <ProjectReference Include="..\SharedValueObjects\SharedShippingDomainObjects.csproj">
       <Project>{7e23e853-dce6-44d6-9931-d542915c954c}</Project>
-      <Name>SharedDomainObjects</Name>
+      <Name>SharedShippingDomainObjects</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EventSourcingStoreBase
+namespace BaseDomainObjects
 {
-    public interface IRepository<T> where T : IAggregate
+    public interface IRepository<T, TIdentity> where T : IEventSourcedAggregate<TIdentity>
     {
-        IAggregate Get(System.Guid id, System.DateTime? date);
+        IEventSourcedAggregate<TIdentity> Get(System.Guid id, System.DateTime? date);
         void Save(T instance);
     }
 }

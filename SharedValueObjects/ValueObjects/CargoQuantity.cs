@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaseDomainObjects.ValueObjects;
 
-namespace SharedDomainsObjects.ValueObjects
+namespace SharedShippingDomainsObjects.ValueObjects
 {
-    public class CargoQuantity: BaseValueObject<CargoQuantity>
+    public class CargoQuantity: ValueObject<CargoQuantity>
     {
         public string UnitOfMeasure { get; private set; }
         public decimal Quantity { get; private set; }
@@ -15,6 +16,8 @@ namespace SharedDomainsObjects.ValueObjects
         {
             this.UnitOfMeasure = uom;
             this.Quantity = quantity;
+
+            this.Value = this;
         }
     }
 }

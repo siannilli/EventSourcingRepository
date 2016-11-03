@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcingStoreBase", "EventSourcingStoreManager\EventSourcingStoreBase.csproj", "{2E328522-D4C6-4449-A383-AD140E5D345E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseDomainObjects", "EventSourcingStoreManager\BaseDomainObjects.csproj", "{2E328522-D4C6-4449-A383-AD140E5D345E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotCharterDomain", "SpotCharterDomain\SpotCharterDomain.csproj", "{9AB64050-096F-4F2F-8C5E-F87D4B420ED8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotCharterRepository", "SpotCharterRepository\SpotCharterRepository.csproj", "{DBFA7915-A682-41B8-9924-7EEDB8524F92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedDomainObjects", "SharedValueObjects\SharedDomainObjects.csproj", "{7E23E853-DCE6-44D6-9931-D542915C954C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedShippingDomainObjects", "SharedValueObjects\SharedShippingDomainObjects.csproj", "{7E23E853-DCE6-44D6-9931-D542915C954C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainObjectsTests", "DomainObjectsTests\DomainObjectsTests.csproj", "{4A9B9EB2-475B-467B-8C6C-6DF407790CD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7E23E853-DCE6-44D6-9931-D542915C954C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E23E853-DCE6-44D6-9931-D542915C954C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E23E853-DCE6-44D6-9931-D542915C954C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A9B9EB2-475B-467B-8C6C-6DF407790CD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A9B9EB2-475B-467B-8C6C-6DF407790CD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A9B9EB2-475B-467B-8C6C-6DF407790CD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A9B9EB2-475B-467B-8C6C-6DF407790CD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

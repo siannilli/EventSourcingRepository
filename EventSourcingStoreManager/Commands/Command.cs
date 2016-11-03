@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EventSourcingStoreBase;
+using BaseDomainObjects;
 
-namespace EventSourcingStoreBase.Commands
+namespace BaseDomainObjects.Commands
 {
-    public abstract class BaseCommand : ICommand
+    public abstract class Command<T, TIdentity> : ICommand where T : IEventSourcedAggregate<TIdentity>
     {
         Guid _id;
         public Guid Id{get; private set;}
         public ulong Version { get; private set; }
 
-        public Guid AggregateId { get; private set; }
+        public TIdentity AggregateId { get; private set; }
 
         Guid ICommand.Id
         {
@@ -36,14 +36,14 @@ namespace EventSourcingStoreBase.Commands
             }
         }
 
-        public BaseCommand(Guid aggregateId, ulong version)
+        public Command(TIdentity aggregateId, ulong version)
         {
             this.AggregateId = aggregateId;
             this.Version = version;
         }
 
-        public BaseCommand(IAggregate aggregate)
-            : this(aggregate.Id, (aggregate.EventsHistory?.Max(e => e.Version) ?? 0) + 1)
+        public Command(T aggregate)
+            : this(aggregate.Id, (aggregate.Version + 1))
         {
 
         }

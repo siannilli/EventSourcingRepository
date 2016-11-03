@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaseDomainObjects.ValueObjects;
 
-namespace SharedDomainsObjects.ValueObjects
+namespace SharedShippingDomainsObjects.ValueObjects
 {
-    public class DateRange : BaseValueObject<DateRange>
+    public class DateRange : ValueObject<DateRange>
     {
 
         public DateTime From { get; private set; }

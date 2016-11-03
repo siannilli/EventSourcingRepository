@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SharedDomainsObjects.ValueObjects;
+using SharedShippingDomainsObjects.ValueObjects;
+using BaseDomainObjects.Entities;
 
-namespace SharedDomainsObjects.Entities
+namespace SharedShippingDomainsObjects.Entities
 {
-    public class Port: BaseEntity
+    public class Port: Entity<PortId>
     {
         public string UNTACD { get; private set; }
         public string Name { get; private set; }
         public string Country { get; private set; }
         public GeographicPoint Position { get; private set; }
 
-        public Port(Guid id, string code, string name, string country, GeographicPoint point)
+        public Port(PortId id, string code, string name, string country, GeographicPoint point)
             : base(id)
         {
             this.UNTACD = code;
