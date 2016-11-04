@@ -11,7 +11,7 @@ namespace BaseDomainObjects.Aggregates
     public class EventSourcedAggregate<TIdentity> : Entity<TIdentity>, IEventSourcedAggregate<TIdentity>
     {
         private readonly Dictionary<Type, Action<IEvent>> handlers = new Dictionary<Type, Action<IEvent>>();
-        ulong version = 0;
+        int version = 0;
         
         IList<IEvent> pendingEvents = new List<IEvent>();    
 
@@ -55,12 +55,13 @@ namespace BaseDomainObjects.Aggregates
         {
             var handler = this.handlers[@event.GetType()];
             handler.Invoke(@event);
+            // this.version = @event.Version; // Version update only when persisted, to avoid increments of version for each update
             this.pendingEvents.Add(@event);
         }
 
         protected void UpdateAggregate(IEvent @event)
         {
-            if (@event.Version < this.version)
+            if (@event.Version <= this.version)
                 throw new InvalidAggregateVersionException();
 
             this.PlayEvent(@event);
@@ -68,7 +69,7 @@ namespace BaseDomainObjects.Aggregates
                          
         } 
 
-        public ulong Version { get { return this.version; } }
+        public int Version { get { return this.version; } }
 
         IEnumerable<IEvent> IEventSourcedAggregate<TIdentity>.Events
         {
@@ -78,11 +79,11 @@ namespace BaseDomainObjects.Aggregates
             }
         }
 
-        ulong IEventSourcedAggregate<TIdentity>.Version
+        int IEventSourcedAggregate<TIdentity>.Version
         {
             get
             {
-                return this.version + (ulong)this.pendingEvents.Count();
+                return this.version + (int)this.pendingEvents.Count();
             }
         }
 

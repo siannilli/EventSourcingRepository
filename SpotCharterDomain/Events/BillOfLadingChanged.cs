@@ -10,7 +10,7 @@ namespace SpotCharterDomain.Events
 {
     public class BillOfLadingChanged: Event
     {
-        public BillOfLadingChanged(Guid eventId, ulong version, SpotCharterId sourceId, 
+        public BillOfLadingChanged(Guid eventId, int version, SpotCharterId sourceId, 
             DateTime date,
             CargoQuantity quantity,
             string documentReference)

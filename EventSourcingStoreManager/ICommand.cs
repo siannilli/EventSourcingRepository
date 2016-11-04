@@ -9,7 +9,7 @@ namespace BaseDomainObjects
     public interface ICommand
     {
         Guid Id { get; }
-        ulong Version { get; set; }
+        int Version { get; set; }
 
     }
 }

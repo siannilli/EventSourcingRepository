@@ -44,9 +44,14 @@ namespace SpotCharterDomain
             this.UpdateAggregate(creationEvent);                
         }
 
-        public SpotCharter(SpotCharterId id, IEnumerable<IEvent> events)
+        public SpotCharter(IEnumerable<IEvent> events)
             :this()
         {
+            SpotCharterCreated firstEvent = events.FirstOrDefault(e => e is SpotCharterCreated) as SpotCharterCreated;
+            if (firstEvent == null)
+                throw new InvalidOperationException("Missing creation event");
+
+            this.Id = firstEvent.SourceId;
             this.ReplayEvents(events);
         }
 
@@ -85,17 +90,17 @@ namespace SpotCharterDomain
             CostAmount priceUnit,
             DemurrageRateTimeUnit interval)
         {
-            this.UpdateAggregate(new DemurrageRateChanged(Guid.NewGuid(), this.Id, this.Version, new DemurrageRate(laytimeLoad, laytimeDischarge, laytimeTotal, priceUnit, interval)));
+            this.UpdateAggregate(new DemurrageRateChanged(Guid.NewGuid(), this.Version + 1 , this.Id, new DemurrageRate(laytimeLoad, laytimeDischarge, laytimeTotal, priceUnit, interval)));
         }
 
         public void UpdateVessel(Vessel vessel)
         {
-            this.UpdateAggregate(new VesselChanged(Guid.NewGuid(), this.Version + 1, this.Id, vessel));
+            this.UpdateAggregate(new VesselChanged(Guid.NewGuid(), this.Version + 1, this.Id, vessel.Id, vessel.Name));
         }
 
         public void ChangeCharterparty(Counterparty counterparty)
         {
-            this.UpdateAggregate(new CharterpartyChanged(Guid.NewGuid(), this.Version + 1, this.Id, counterparty));
+            this.UpdateAggregate(new CharterpartyChanged(Guid.NewGuid(), this.Version + 1, this.Id, counterparty.Id, counterparty.Name));
         }
 
         public void UpdateBillOfLading(DateTime date, CargoQuantity quantity, string documentReference)
@@ -132,17 +137,17 @@ namespace SpotCharterDomain
         {
             this.Id = @event.SourceId;
             this.CharterpartyDate = @event.CharterpartyDate;
-            this.CharterpartyId = @event.Counterparty.Id;
-            this.CharterpartyName = @event.Counterparty.ToString();
-            this.VesselId = @event.Vessel.Id;
-            this.VesselName = @event.Vessel.Name;
+            this.CharterpartyId = @event.CounterpartyId;
+            this.CharterpartyName = @event.CounterpartyId.ToString();
+            this.VesselId = @event.VesselId;
+            this.VesselName = @event.VesselCurrentName;
             this.MinimumQuantity  = @event.MinimumQuantity;
         } 
         
         private void OnVesselChanged(VesselChanged @event)
         {
-            this.VesselId = @event.Vessel.Id;
-            this.VesselName = @event.Vessel.ToString();
+            this.VesselId = @event.VesselId;
+            this.VesselName = @event.CurrentName;
         }
 
         private void OnDemurrageRateChanged(DemurrageRateChanged @event)
@@ -173,8 +178,8 @@ namespace SpotCharterDomain
 
         private void OnCharterpartyChanged(CharterpartyChanged @event)
         {
-            this.CharterpartyId = @event.Charterparty.Id;
-            this.CharterpartyName = @event.Charterparty.ToString();
+            this.CharterpartyId = @event.CharterpartyId;
+            this.CharterpartyName = @event.CurrentName;
         }
 
         private void OnLaycanChanged(LaycanChanged @event)

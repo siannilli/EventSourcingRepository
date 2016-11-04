@@ -11,7 +11,7 @@ namespace BaseDomainObjects
         Guid Id { get; }
         string EventName { get; }
         string Source { get; }        
-        ulong Version { get; }
+        int Version { get; }
 
     }
 }

@@ -11,13 +11,16 @@ namespace SpotCharterDomain.Events
 {
     public class VesselChanged : Event
     {
-        public VesselChanged(Guid eventId, ulong version, SpotCharterId spotId, Vessel vessel) : base(eventId, version)
+        public VesselChanged(Guid eventId, int version, SpotCharterId spotId, VesselId vesselId, string name)
+            : base(eventId, version)
         {
             this.SourceId = spotId;
-            this.Vessel = vessel;
+            this.VesselId = vesselId;
+            this.CurrentName = name;
         }
 
+        public string CurrentName { get; private set; }
         public SpotCharterId SourceId { get; private set; }
-        public Vessel Vessel { get; private set; }
+        public VesselId VesselId { get; private set; }
     }
 }

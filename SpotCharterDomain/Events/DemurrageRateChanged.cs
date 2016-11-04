@@ -9,7 +9,7 @@ namespace SpotCharterDomain.Events
 {
     public class DemurrageRateChanged : BaseDomainObjects.Events.Event
     {
-        public DemurrageRateChanged(Guid eventId, SpotCharterId sourceId, ulong version,
+        public DemurrageRateChanged(Guid eventId, int version, SpotCharterId sourceId,
             DemurrageRate rate) 
             : base(eventId, version)
         {

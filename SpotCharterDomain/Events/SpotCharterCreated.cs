@@ -13,25 +13,31 @@ namespace SpotCharterDomain.Events
     public class SpotCharterCreated : Event
     {
         public SpotCharterCreated(Guid eventId,
-            ulong version,
+            int version,
             SpotCharterId spotId,            
             DateTime charterpartyDate,
-            Counterparty counterparty,
-            Vessel vessel, 
+            CounterpartyId charterpartyId,
+            string charterpartyCurrentName,
+            VesselId vesselId,
+            string vesselCurrentName, 
             CargoQuantity minimumQuantity) 
             : base(eventId, version)
         {
             this.SourceId = spotId;
             this.CharterpartyDate = charterpartyDate;
-            this.Counterparty = counterparty;
-            this.Vessel = vessel;
+            this.CounterpartyId = charterpartyId;
+            this.CounterpartyCurrentName = charterpartyCurrentName;
+            this.VesselId = vesselId;
+            this.VesselCurrentName = vesselCurrentName;
             this.MinimumQuantity = minimumQuantity;
         }
 
         public DateTime CharterpartyDate { get; private set; }
-        public Counterparty Counterparty { get; private set; }
-        public Vessel Vessel { get; private set; }
+        public CounterpartyId CounterpartyId { get; private set; }
+        public string CounterpartyCurrentName { get; private set; }
+        public VesselId VesselId { get; private set; }
         public CargoQuantity MinimumQuantity { get; private set; }        
         public SpotCharterId SourceId { get; private set; }
+        public string VesselCurrentName { get; private set; }
     }
 }

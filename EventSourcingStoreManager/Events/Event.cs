@@ -8,20 +8,20 @@ namespace BaseDomainObjects.Events
 {
     public class Event : IEvent
     {
-        public Event(Guid eventId, ulong version)
+        public Event(Guid eventId, int version)
         {
             this.EventId = eventId;
             this.Version = version;
         }
 
-        public Event(Guid eventId, ulong version, string source)
+        public Event(Guid eventId, int version, string source)
             : this(eventId, version)
         {
             this.Source = source;
         }
 
         public Guid EventId { get; private set; }
-        public ulong Version { get; private set; }
+        public int Version { get; private set; }
 
         string IEvent.EventName
         {
@@ -40,7 +40,7 @@ namespace BaseDomainObjects.Events
 
         }
 
-        ulong IEvent.Version
+        int IEvent.Version
         {
             get
             {

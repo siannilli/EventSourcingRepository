@@ -10,7 +10,7 @@ namespace SpotCharterDomain.Events
 {
     public class LaycanChanged: Event
     {
-        public LaycanChanged(Guid eventId, ulong version, SpotCharterId spotId, DateRange laycan)
+        public LaycanChanged(Guid eventId, int version, SpotCharterId spotId, DateRange laycan)
             : base(eventId, version)
         {
             this.SourceId = spotId;

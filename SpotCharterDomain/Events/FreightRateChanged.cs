@@ -10,7 +10,7 @@ namespace SpotCharterDomain.Events
 {
     public class FreightRateChanged: Event
     {
-        public FreightRateChanged(Guid eventId, SpotCharterId spotId, ulong version, ValueObjects.FreightRate freightRate)
+        public FreightRateChanged(Guid eventId, SpotCharterId spotId, int version, ValueObjects.FreightRate freightRate)
             : base(eventId, version)
         {
             this.SourceId = spotId;

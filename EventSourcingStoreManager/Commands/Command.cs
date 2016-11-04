@@ -11,7 +11,7 @@ namespace BaseDomainObjects.Commands
     {
         Guid _id;
         public Guid Id{get; private set;}
-        public ulong Version { get; private set; }
+        public int Version { get; private set; }
 
         public TIdentity AggregateId { get; private set; }
 
@@ -23,7 +23,7 @@ namespace BaseDomainObjects.Commands
             }
         }
 
-        ulong ICommand.Version
+        int ICommand.Version
         {
             get
             {
@@ -36,7 +36,7 @@ namespace BaseDomainObjects.Commands
             }
         }
 
-        public Command(TIdentity aggregateId, ulong version)
+        public Command(TIdentity aggregateId, int version)
         {
             this.AggregateId = aggregateId;
             this.Version = version;

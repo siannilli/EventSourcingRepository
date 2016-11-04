@@ -10,7 +10,7 @@ namespace SpotCharterDomain.Events
 {
     public class PortfolioChanged: Event
     {
-        public PortfolioChanged(Guid eventId, ulong version, SpotCharterId spotId, PortfolioId portfolioId)
+        public PortfolioChanged(Guid eventId, int version, SpotCharterId spotId, PortfolioId portfolioId)
             : base(eventId, version)
         {
             this.PorfolioId = portfolioId;

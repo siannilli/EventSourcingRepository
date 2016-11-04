@@ -10,6 +10,6 @@ namespace BaseDomainObjects
     {
         TIdentity Id { get; }
         IEnumerable<IEvent> Events { get; }
-        ulong Version { get; }
+        int Version { get; }
     }
 }
