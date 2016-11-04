@@ -38,10 +38,11 @@ namespace SpotCharterDomain
             this.Id = id;
         }
 
-        public SpotCharter(SpotCharterCreated creationEvent)
+        public SpotCharter(DateTime charterpartyDate, CounterpartyId charterpartyId, string charterpartyName, VesselId vesselId, string vesselName,CargoQuantity minimumQuantity)
             : this()
         {
-            this.UpdateAggregate(creationEvent);                
+            
+            this.UpdateAggregate(new SpotCharterCreated(Guid.NewGuid(), 1, new SpotCharterId(Guid.NewGuid()), charterpartyDate, charterpartyId, charterpartyName, vesselId, vesselName, minimumQuantity));                
         }
 
         public SpotCharter(IEnumerable<IEvent> events)
@@ -79,12 +80,12 @@ namespace SpotCharterDomain
 
         #region Aggregate Actions
 
-        public void UpdatePortfolio(PortfolioId newPortfolio)
+        public void ChangePortfolio(PortfolioId newPortfolio)
         {
             this.UpdateAggregate(new PortfolioChanged(Guid.NewGuid(), this.Version + 1, this.Id, newPortfolio));
         }
 
-        public void UpdateDemurrageRate(double laytimeLoad, 
+        public void ChangeDemurrageRate(double laytimeLoad, 
             double laytimeDischarge, 
             double laytimeTotal,
             CostAmount priceUnit,
@@ -93,17 +94,17 @@ namespace SpotCharterDomain
             this.UpdateAggregate(new DemurrageRateChanged(Guid.NewGuid(), this.Version + 1 , this.Id, new DemurrageRate(laytimeLoad, laytimeDischarge, laytimeTotal, priceUnit, interval)));
         }
 
-        public void UpdateVessel(Vessel vessel)
+        public void ChangeVessel(VesselId vesselId, string vesselName)
         {
-            this.UpdateAggregate(new VesselChanged(Guid.NewGuid(), this.Version + 1, this.Id, vessel.Id, vessel.Name));
+            this.UpdateAggregate(new VesselChanged(Guid.NewGuid(), this.Version + 1, this.Id, vesselId, vesselName));
         }
 
-        public void ChangeCharterparty(Counterparty counterparty)
+        public void ChangeCharterparty(CounterpartyId counterpartyId, string counterpartyName)
         {
-            this.UpdateAggregate(new CharterpartyChanged(Guid.NewGuid(), this.Version + 1, this.Id, counterparty.Id, counterparty.Name));
+            this.UpdateAggregate(new CharterpartyChanged(Guid.NewGuid(), this.Version + 1, this.Id, counterpartyId, counterpartyName));
         }
 
-        public void UpdateBillOfLading(DateTime date, CargoQuantity quantity, string documentReference)
+        public void ChangeBillOfLading(DateTime date, CargoQuantity quantity, string documentReference)
         {
             this.UpdateAggregate(new BillOfLadingChanged(Guid.NewGuid(), this.Version + 1, this.Id, date, quantity, documentReference));
         }
@@ -124,7 +125,7 @@ namespace SpotCharterDomain
             this.UpdateAggregate(new FreightRateChanged(Guid.NewGuid(), this.Id, this.Version + 1, new ValueObjects.FreightRate(price, uom, new ValueObjects.Overage(overageType, overageValue))));
         }
 
-        public void UpdateLaycan(DateTime from, DateTime to)
+        public void ChangeLaycan(DateTime from, DateTime to)
         {
             this.UpdateAggregate(new LaycanChanged(Guid.NewGuid(), this.Version + 1, this.Id, new DateRange(from, to)));
         }

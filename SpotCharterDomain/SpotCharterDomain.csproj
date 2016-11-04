@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CreateSpotCharter.cs" />
     <Compile Include="Enums\FreigthCalculation.cs" />
     <Compile Include="Enums\OverageType.cs" />
     <Compile Include="Events\BillOfLadingChanged.cs" />
@@ -52,9 +51,9 @@
     <Compile Include="Events\SpotCharterCreated.cs" />
     <Compile Include="Events\SpotCharterDeleted.cs" />
     <Compile Include="Events\VesselChanged.cs" />
+    <Compile Include="ISpotCharterRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpotCharter.cs" />
-    <Compile Include="SpotCharterCommandHandler.cs" />
     <Compile Include="ValueObjects\FreightRate.cs" />
     <Compile Include="ValueObjects\Overage.cs" />
   </ItemGroup>

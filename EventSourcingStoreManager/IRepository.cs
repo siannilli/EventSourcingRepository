@@ -7,7 +7,7 @@ namespace BaseDomainObjects
 {
     public interface IRepository<T, TIdentity> where T : IEventSourcedAggregate<TIdentity>
     {
-        IEventSourcedAggregate<TIdentity> Get(System.Guid id, System.DateTime? date);
+        T Get(TIdentity id);
         void Save(T instance);
     }
 }

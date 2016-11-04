@@ -8,7 +8,7 @@ using BaseDomainObjects.Entities;
 
 namespace SharedShippingDomainsObjects.Entities
 {
-    public class Port: Entity<PortId>
+    class Port: Entity<PortId>
     {
         public string UNTACD { get; private set; }
         public string Name { get; private set; }

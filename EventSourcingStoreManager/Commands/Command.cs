@@ -7,45 +7,27 @@ using BaseDomainObjects;
 
 namespace BaseDomainObjects.Commands
 {
-    public abstract class Command<T, TIdentity> : ICommand where T : IEventSourcedAggregate<TIdentity>
-    {
-        Guid _id;
+    public abstract class Command : ICommand 
+    {   
+        
+        public Command()
+        {
+            this.Id = Guid.NewGuid();
+        }
+        
+        public Command(Guid id)
+        {
+            this.Id = id;
+        }     
+
         public Guid Id{get; private set;}
-        public int Version { get; private set; }
-
-        public TIdentity AggregateId { get; private set; }
-
+                
         Guid ICommand.Id
         {
             get
             {
                 return this.Id;
             }
-        }
-
-        int ICommand.Version
-        {
-            get
-            {
-                return this.Version ;
-            }
-
-            set
-            {
-                this.Version = value;
-            }
-        }
-
-        public Command(TIdentity aggregateId, int version)
-        {
-            this.AggregateId = aggregateId;
-            this.Version = version;
-        }
-
-        public Command(T aggregate)
-            : this(aggregate.Id, (aggregate.Version + 1))
-        {
-
         }
 
     }

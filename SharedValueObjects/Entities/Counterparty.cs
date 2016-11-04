@@ -8,7 +8,7 @@ using SharedShippingDomainsObjects.ValueObjects;
 
 namespace SharedShippingDomainsObjects.Entities
 {
-    public class Counterparty: Entity<CounterpartyId>
+    class Counterparty: Entity<CounterpartyId>
     {
         public string Name { get; private set; }
 

@@ -8,7 +8,7 @@ using BaseDomainObjects.Entities;
 
 namespace SharedShippingDomainsObjects.Entities
 {
-    public class Vessel: Entity<VesselId>
+    class Vessel: Entity<VesselId>
     {
         public string IMONumber { get; private set; }
         public string Name { get; private set; }

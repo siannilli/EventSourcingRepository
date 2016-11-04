@@ -17,9 +17,16 @@ namespace DomainObjectsTests
     {
 
         SpotCharterId spotId = new SpotCharterId(Guid.NewGuid());
-        Counterparty counterparty = new Counterparty(new CounterpartyId(Guid.NewGuid()), "VITOL");
-        Counterparty  counterparty1 = new Counterparty(new CounterpartyId(Guid.NewGuid()), "FRATELLI SERPENTI");
-        Vessel vessel = new Vessel(new VesselId(Guid.NewGuid()), "99999999", "Santa maria");
+
+        CounterpartyId cpId1 = new CounterpartyId(Guid.NewGuid());
+        CounterpartyId cpId2 = new CounterpartyId(Guid.NewGuid());
+
+        string counterparty1 ="VITOL";
+        string  counterparty2 = "FRATELLI SERPENTI";
+
+        VesselId vesselId = new VesselId(Guid.NewGuid());
+        string vesselName = "Santa maria";
+
         CargoQuantity minimumQuantityStart = new CargoQuantity("MT", 85000);
 
         DateRange laycan = new DateRange(DateTime.Now.AddDays(3).Date, DateTime.Now.Date);
@@ -28,15 +35,15 @@ namespace DomainObjectsTests
         [TestMethod]
         public void CreateAggregateFromUpdates()
         {
-            var spot = new SpotCharterDomain.SpotCharter(new SpotCharterCreated(Guid.NewGuid(), 1, spotId, DateTime.Now, counterparty.Id, counterparty.Name, vessel.Id, vessel.Name, minimumQuantityStart));
+            var spot = new SpotCharterDomain.SpotCharter(DateTime.Now, cpId1, counterparty1, vesselId, vesselName, minimumQuantityStart);
 
-            spot.UpdateLaycan(laycan.From, laycan.To);
-            spot.UpdateDemurrageRate(demurrageRate.LoadHoursLaytime, demurrageRate.DischargeHoursLaytime, demurrageRate.TotalHoursLaytime, demurrageRate.Price, demurrageRate.TimeUnit);
+            spot.ChangeLaycan(laycan.From, laycan.To);
+            spot.ChangeDemurrageRate(demurrageRate.LoadHoursLaytime, demurrageRate.DischargeHoursLaytime, demurrageRate.TotalHoursLaytime, demurrageRate.Price, demurrageRate.TimeUnit);
 
-            spot.ChangeCharterparty(counterparty1);
+            spot.ChangeCharterparty(cpId2, counterparty2);
 
             Assert.AreEqual(spot.DemurrageRate, demurrageRate);
-            Assert.AreEqual(spot.VesselName, vessel.Name);
+            Assert.AreEqual(spot.VesselName, vesselName);
             Assert.AreEqual(spot.Laycan, laycan);
 
             Assert.AreEqual(spot.Version, 0);
@@ -49,16 +56,16 @@ namespace DomainObjectsTests
         {
             var eventStream = new List<IEvent>()
             {
-                new SpotCharterCreated(Guid.NewGuid(), 1, spotId, DateTime.Now, counterparty.Id, counterparty.Name, vessel.Id, vessel.Name, minimumQuantityStart),
+                new SpotCharterCreated(Guid.NewGuid(), 1, spotId, DateTime.Now, cpId1, counterparty1, vesselId, vesselName, minimumQuantityStart),
                 new LaycanChanged(Guid.NewGuid(), 2, spotId, laycan ),
                 new DemurrageRateChanged(Guid.NewGuid(), 3, spotId, demurrageRate),
-                new CharterpartyChanged(Guid.NewGuid(), 4, spotId, counterparty1.Id, counterparty1.Name),                
+                new CharterpartyChanged(Guid.NewGuid(), 4, spotId, cpId2, counterparty2),                
             };
 
             var spot = new SpotCharterDomain.SpotCharter(eventStream);
 
             Assert.AreEqual(spot.DemurrageRate, demurrageRate);
-            Assert.AreEqual(spot.VesselName, vessel.Name);
+            Assert.AreEqual(spot.VesselName, vesselName);
             Assert.AreEqual(spot.Laycan, laycan);
 
             Assert.AreEqual(spot.Version, 4);
