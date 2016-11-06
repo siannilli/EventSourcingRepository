@@ -16,7 +16,7 @@ namespace SpotCharterDomain.Events
             string documentReference)
             :base(eventId, version)
         {
-            this.SourceId = sourceId;
+            this.SpotCharterId = sourceId;
             this.Date = date;
             this.Quantity = quantity;
         }
@@ -24,7 +24,7 @@ namespace SpotCharterDomain.Events
         public DateTime Date { get; private set; }
         public string DocumentReference { get; private set; }
         public CargoQuantity Quantity { get; private set; }
-        public SpotCharterId SourceId { get; private set; }
+        public SpotCharterId SpotCharterId { get; private set; }
 
     }
 }

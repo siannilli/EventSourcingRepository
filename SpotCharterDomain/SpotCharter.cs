@@ -52,7 +52,7 @@ namespace SpotCharterDomain
             if (firstEvent == null)
                 throw new InvalidOperationException("Missing creation event");
 
-            this.Id = firstEvent.SourceId;
+            this.Id = firstEvent.SpotCharterId;
             this.ReplayEvents(events);
         }
 
@@ -136,7 +136,7 @@ namespace SpotCharterDomain
 
         private void OnSpotCharterCreated(SpotCharterCreated @event)
         {
-            this.Id = @event.SourceId;
+            this.Id = @event.SpotCharterId;
             this.CharterpartyDate = @event.CharterpartyDate;
             this.CharterpartyId = @event.CounterpartyId;
             this.CharterpartyName = @event.CounterpartyCurrentName;

@@ -14,13 +14,13 @@ namespace SpotCharterDomain.Events
         public VesselChanged(Guid eventId, int version, SpotCharterId spotId, VesselId vesselId, string name)
             : base(eventId, version)
         {
-            this.SourceId = spotId;
+            this.SpotCharterId = spotId;
             this.VesselId = vesselId;
             this.CurrentName = name;
         }
 
         public string CurrentName { get; private set; }
-        public SpotCharterId SourceId { get; private set; }
+        public SpotCharterId SpotCharterId { get; private set; }
         public VesselId VesselId { get; private set; }
     }
 }

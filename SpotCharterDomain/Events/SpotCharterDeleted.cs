@@ -11,9 +11,9 @@ namespace SpotCharterDomain.Events
     {
         public SpotCharterDeleted(Guid eventId, int version, SpotCharterId spotId) : base(eventId, version)
         {
-            this.SourceId = spotId;
+            this.SpotCharterId = spotId;
         }
 
-        public SpotCharterId SourceId { get; private set; }
+        public SpotCharterId SpotCharterId { get; private set; }
     }
 }

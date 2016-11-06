@@ -14,10 +14,10 @@ namespace SpotCharterDomain.Events
             : base(eventId, version)
         {
             this.PorfolioId = portfolioId;
-            this.SourceId = spotId;
+            this.SpotCharterId = spotId;
         }
 
         public PortfolioId PorfolioId { get; private set; }
-        public SpotCharterId SourceId { get; private set; }
+        public SpotCharterId SpotCharterId { get; private set; }
     }
 }

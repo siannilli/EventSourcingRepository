@@ -23,7 +23,7 @@ namespace SpotCharterDomain.Events
             CargoQuantity minimumQuantity) 
             : base(eventId, version)
         {
-            this.SourceId = spotId;
+            this.SpotCharterId = spotId;
             this.CharterpartyDate = charterpartyDate;
             this.CounterpartyId = charterpartyId;
             this.CounterpartyCurrentName = charterpartyCurrentName;
@@ -37,7 +37,7 @@ namespace SpotCharterDomain.Events
         public string CounterpartyCurrentName { get; private set; }
         public VesselId VesselId { get; private set; }
         public CargoQuantity MinimumQuantity { get; private set; }        
-        public SpotCharterId SourceId { get; private set; }
+        public SpotCharterId SpotCharterId { get; private set; }
         public string VesselCurrentName { get; private set; }
     }
 }

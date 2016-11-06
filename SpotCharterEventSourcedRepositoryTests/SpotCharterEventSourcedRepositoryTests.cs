@@ -69,5 +69,24 @@ namespace SpotCharterEventSourcedRepository.Tests
             Assert.AreNotEqual(spot1.Version, 4);
 
         }
+
+        [TestMethod]
+        public void CreateAndUpdate()
+        {
+            var spot = GetSpotCharter();
+            ISpotCharterRepository repository = new SpotCharterEventSourcedRepository
+                ("SpotCharters", "spot_user", "spot_user", "spot_events", host: "sql-db");
+
+            repository.Save(spot);
+
+            var spotV1 = repository.Get(spot.Id);
+            spotV1.ChangeVessel(new VesselId(Guid.NewGuid()), "Pinta");
+
+            repository.Save(spotV1);
+
+            var spotV2 = repository.Get(spot.Id);
+            Assert.AreEqual(2, spotV2.Version);
+            Assert.AreEqual(spotV2.VesselName, "Pinta");
+        }
     }
 }

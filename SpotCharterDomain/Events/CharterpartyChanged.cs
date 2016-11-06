@@ -14,13 +14,13 @@ namespace SpotCharterDomain.Events
         public CharterpartyChanged(Guid eventId, int version, SpotCharterId spotId, CounterpartyId charterpartyId, string name)
             : base(eventId, version)
         {
-            this.SouceId = spotId;
+            this.SpotCharterId = spotId;
             this.CharterpartyId = charterpartyId;
             this.CurrentName = name;
         }
 
         public CounterpartyId CharterpartyId { get; private set; }
         public string CurrentName { get; private set; }
-        public SpotCharterId SouceId { get; private set; }
+        public SpotCharterId SpotCharterId { get; private set; }
     }
 }

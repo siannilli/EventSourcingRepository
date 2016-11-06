@@ -143,6 +143,7 @@ VALUES (@id, @aggregate_type, @date_time, @payload, @payload_type, @version, { s
             var commandText = $@"
 SELECT payload, payload_type FROM {this.tableName} 
 WHERE { string.Join(" AND ", keyValues.Keys.Select(k => $"{k}=@{k}" )) }
+ORDER BY version, date_time
 ";
 
             using (var connection = new NpgsqlConnection(this.connectionString))

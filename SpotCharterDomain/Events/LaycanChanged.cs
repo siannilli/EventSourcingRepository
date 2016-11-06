@@ -13,11 +13,11 @@ namespace SpotCharterDomain.Events
         public LaycanChanged(Guid eventId, int version, SpotCharterId spotId, DateRange laycan)
             : base(eventId, version)
         {
-            this.SourceId = spotId;
+            this.SpotCharterId = spotId;
             this.Laycan = laycan;
         }
 
         public DateRange Laycan { get; private set; }
-        public SpotCharterId SourceId { get; private set; }
+        public SpotCharterId SpotCharterId { get; private set; }
     }
 }

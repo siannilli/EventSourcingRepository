@@ -13,12 +13,12 @@ namespace SpotCharterDomain.Events
             DemurrageRate rate) 
             : base(eventId, version)
         {
-            this.SourceId = spotId;
+            this.SpotCharterId = spotId;
             this.Rate = rate;
         }
 
 
         public DemurrageRate Rate { get; private set; }
-        public SpotCharterId SourceId { get; private set; }
+        public SpotCharterId SpotCharterId { get; private set; }
     }
 }
