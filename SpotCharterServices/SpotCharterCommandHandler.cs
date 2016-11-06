@@ -51,12 +51,16 @@ namespace SpotCharterServices
 
         void ICommandHandler<ChangeLaycan>.Handle(ChangeLaycan command)
         {
-            throw new NotImplementedException();
+            var spot = this._repository.Get(command.SpotCharterId);
+            spot.ChangeLaycan(command.From, command.To);
+            this._repository.Save(spot);
         }
 
         void ICommandHandler<ChangeBillOfLading>.Handle(ChangeBillOfLading command)
         {
-            throw new NotImplementedException();
+            var spot = this._repository.Get(command.SpotCharterId);
+            spot.ChangeBillOfLading(command.BLDate, command.BLQuantity, command.DocumentReference);
+            this._repository.Save(spot);
         }
 
         void ICommandHandler<ChangeCharterparty>.Handle(ChangeCharterparty command)

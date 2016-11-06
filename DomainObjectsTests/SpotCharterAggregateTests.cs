@@ -10,6 +10,8 @@ using SharedShippingDomainsObjects.Entities;
 using SharedShippingDomainsObjects.ValueObjects;
 using SpotCharterDomain.Events;
 
+using SpotCharterDomain;
+
 namespace DomainObjectsTests
 {
     [TestClass]
@@ -32,8 +34,7 @@ namespace DomainObjectsTests
         DateRange laycan = new DateRange(DateTime.Now.AddDays(3).Date, DateTime.Now.Date);
         DemurrageRate demurrageRate = new DemurrageRate(0, 0, 72, new CostAmount(new Currency("USD", "US DOLLAR", "$"), 25000), SharedShippingDomainsObjects.Enums.DemurrageRateTimeUnit.Day);
 
-        [TestMethod]
-        public void CreateAggregateFromUpdates()
+        private SpotCharterDomain.SpotCharter GetSpotCharter()
         {
             var spot = new SpotCharterDomain.SpotCharter(DateTime.Now, cpId1, counterparty1, vesselId, vesselName, minimumQuantityStart);
 
@@ -41,6 +42,15 @@ namespace DomainObjectsTests
             spot.ChangeDemurrageRate(demurrageRate.LoadHoursLaytime, demurrageRate.DischargeHoursLaytime, demurrageRate.TotalHoursLaytime, demurrageRate.Price, demurrageRate.TimeUnit);
 
             spot.ChangeCharterparty(cpId2, counterparty2);
+
+            return spot;
+
+        }
+
+        [TestMethod]
+        public void CreateAggregateFromUpdates()
+        {
+            var spot = GetSpotCharter();
 
             Assert.AreEqual(spot.DemurrageRate, demurrageRate);
             Assert.AreEqual(spot.VesselName, vesselName);
@@ -70,8 +80,32 @@ namespace DomainObjectsTests
 
             Assert.AreEqual(spot.Version, 4);
             
-
         }
+
+
+        [TestMethod]
+        public void TestInMemoryRepository()
+        {
+            var spot = GetSpotCharter();
+            ISpotCharterRepository repository = new InMemoryEventSourceSpotRepository.InMemoryEventSourceSpotRepository();
+
+            repository.Save(spot);
+
+            var spot1 = repository.Get(spot.Id);
+
+            Assert.IsNotNull(spot1);
+            Assert.AreEqual(spot.Id, spot1.Id);
+            Assert.AreEqual(spot.CharterpartyId, spot1.CharterpartyId);
+            Assert.AreEqual(spot.CharterpartyName, spot1.CharterpartyName);
+            Assert.AreEqual(spot.VesselId, spot1.VesselId);
+            Assert.AreEqual(spot.VesselName, spot1.VesselName);
+            Assert.AreNotEqual(spot.Version, spot1.Version);
+
+            Assert.AreEqual(spot.Version, 0);
+            Assert.AreNotEqual(spot1.Version, 4);            
+               
+        }
+
 
     }
 }

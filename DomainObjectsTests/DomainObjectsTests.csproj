@@ -61,6 +61,10 @@
       <Project>{2e328522-d4c6-4449-a383-ad140e5d345e}</Project>
       <Name>BaseDomainObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InMemoryEventSourceSpotRepository\InMemoryEventSourceSpotRepository.csproj">
+      <Project>{838f27df-14b4-49a2-a854-89cce1ff5b31}</Project>
+      <Name>InMemoryEventSourceSpotRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedValueObjects\SharedShippingDomainObjects.csproj">
       <Project>{7e23e853-dce6-44d6-9931-d542915c954c}</Project>
       <Name>SharedShippingDomainObjects</Name>

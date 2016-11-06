@@ -17,9 +17,9 @@ namespace BaseDomainObjects.ValueObjects
 
         public override bool Equals(object obj)
         {
-            return obj != null
-                && obj is T
-                && this.AnyProperyEquals((T)obj);
+            return 
+                Object.ReferenceEquals(this, obj)
+                || obj != null && this.AnyProperyEquals((T)obj);
         }
 
         private bool AnyProperyEquals(T other)

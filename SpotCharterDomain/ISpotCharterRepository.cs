@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpotCharterDomain
 {
-    public interface ISpotCharterRepository: BaseDomainObjects.IRepository<SpotCharter, SharedShippingDomainsObjects.ValueObjects.SpotCharterId>
+    public interface ISpotCharterRepository: BaseDomainObjects.IEventSourceRepository<SpotCharter, SharedShippingDomainsObjects.ValueObjects.SpotCharterId>
     {
 
     }

@@ -7,13 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseDomainObjects", "EventS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotCharterDomain", "SpotCharterDomain\SpotCharterDomain.csproj", "{9AB64050-096F-4F2F-8C5E-F87D4B420ED8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotCharterRepository", "SpotCharterRepository\SpotCharterRepository.csproj", "{DBFA7915-A682-41B8-9924-7EEDB8524F92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcePostgresRepository", "SpotCharterRepository\EventSourcePostgresRepository.csproj", "{DBFA7915-A682-41B8-9924-7EEDB8524F92}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedShippingDomainObjects", "SharedValueObjects\SharedShippingDomainObjects.csproj", "{7E23E853-DCE6-44D6-9931-D542915C954C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainObjectsTests", "DomainObjectsTests\DomainObjectsTests.csproj", "{4A9B9EB2-475B-467B-8C6C-6DF407790CD4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotCharterServices", "SpotCharterServices\SpotCharterServices.csproj", "{183F693F-89C5-4107-892B-20F51F7959E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InMemoryEventSourceSpotRepository", "InMemoryEventSourceSpotRepository\InMemoryEventSourceSpotRepository.csproj", "{838F27DF-14B4-49A2-A854-89CCE1FF5B31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{183F693F-89C5-4107-892B-20F51F7959E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{183F693F-89C5-4107-892B-20F51F7959E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{183F693F-89C5-4107-892B-20F51F7959E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{838F27DF-14B4-49A2-A854-89CCE1FF5B31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{838F27DF-14B4-49A2-A854-89CCE1FF5B31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{838F27DF-14B4-49A2-A854-89CCE1FF5B31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{838F27DF-14B4-49A2-A854-89CCE1FF5B31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

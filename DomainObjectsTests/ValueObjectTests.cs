@@ -21,5 +21,15 @@ namespace DomainObjectsTests
 
         }
 
+
+        [TestMethod]
+        public void TestSpotCharterIdEquality()
+        {
+            var spotId = new SpotCharterId(Guid.NewGuid());
+            var spotId1 = new SpotCharterId(spotId.Value);
+
+            Assert.AreEqual(spotId, spotId1);
+        }
+
     }
 }
