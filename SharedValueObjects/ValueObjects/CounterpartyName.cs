@@ -12,9 +12,7 @@ namespace SharedShippingDomainsObjects.ValueObjects
     {
         public CounterpartyName(string name)
         {
-            this.Name = name;
-
-            this.Value = this;
+            this.Name = name;            
         }
 
         public string Name { get; private set; }

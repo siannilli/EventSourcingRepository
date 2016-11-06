@@ -13,9 +13,7 @@ namespace SharedShippingDomainsObjects.ValueObjects
         {
             this.Date = date;
             this.Quantity = quantity;
-            this.DocReference = documentReference;
-
-            this.Value = this;
+            this.DocReference = documentReference;            
 
         }
 

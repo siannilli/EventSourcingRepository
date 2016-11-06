@@ -64,9 +64,7 @@ namespace BaseDomainObjects.Aggregates
             if (@event.Version <= this.version)
                 throw new InvalidAggregateVersionException();
 
-            this.PlayEvent(@event);
-            this.pendingEvents.Add(@event);           
-                         
+            this.PlayEvent(@event);                                     
         } 
 
         public int Version { get { return this.version; } }

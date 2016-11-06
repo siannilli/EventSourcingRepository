@@ -7,11 +7,13 @@ using BaseDomainObjects.ValueObjects;
 
 namespace SharedShippingDomainsObjects.ValueObjects
 {
-    public class CounterpartyId: ValueObject<Guid>
+    public class CounterpartyId: UniqueIdentifier
     {
-        public CounterpartyId(Guid id)
+        public CounterpartyId(Guid value)
+            : base(value)
         {
-            this.Value = id;
-        }
+            
+        }        
+        
     }
 }

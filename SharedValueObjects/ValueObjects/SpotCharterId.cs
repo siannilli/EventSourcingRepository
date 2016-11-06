@@ -7,11 +7,11 @@ using BaseDomainObjects.ValueObjects;
 
 namespace SharedShippingDomainsObjects.ValueObjects
 {
-    public class SpotCharterId : ValueObject<Guid>
+    public class SpotCharterId : UniqueIdentifier
     {
         public SpotCharterId(Guid value) 
-        {
-            this.Value = value;
+            : base(value)
+        {            
         }
 
     }

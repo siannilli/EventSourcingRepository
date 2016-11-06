@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace SharedShippingDomainsObjects.ValueObjects
 {
-    public class VesselId: BaseDomainObjects.ValueObjects.ValueObject<Guid>
+    public class VesselId: UniqueIdentifier
     {
         public VesselId(Guid value)
+            : base(value)
         {
-            this.Value = value;
+            
+
         }
     }
 }

@@ -139,7 +139,7 @@ namespace SpotCharterDomain
             this.Id = @event.SourceId;
             this.CharterpartyDate = @event.CharterpartyDate;
             this.CharterpartyId = @event.CounterpartyId;
-            this.CharterpartyName = @event.CounterpartyId.ToString();
+            this.CharterpartyName = @event.CounterpartyCurrentName;
             this.VesselId = @event.VesselId;
             this.VesselName = @event.VesselCurrentName;
             this.MinimumQuantity  = @event.MinimumQuantity;

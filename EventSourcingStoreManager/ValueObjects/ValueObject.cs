@@ -8,8 +8,7 @@ namespace BaseDomainObjects.ValueObjects
 {
     public abstract class ValueObject<T> : IEquatable<T>
     {
-        public T Value { get; protected set; }
-
+    
         bool IEquatable<T>.Equals(T other)
         {
             return this.Equals(other);
@@ -19,10 +18,10 @@ namespace BaseDomainObjects.ValueObjects
         {
             return 
                 Object.ReferenceEquals(this, obj)
-                || obj != null && this.AnyProperyEquals((T)obj);
+                || obj != null && obj is ValueObject<T> && this.AnyProperyEquals((ValueObject<T>)obj);
         }
 
-        private bool AnyProperyEquals(T other)
+        private bool AnyProperyEquals(ValueObject<T> other)
         {
             bool hasSameValues = true;
             foreach (var prop in this.GetType().GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
@@ -33,7 +32,7 @@ namespace BaseDomainObjects.ValueObjects
                 if (propThis != null)
                 {
                     // propThis can be a reference to this, entering in a circular reference loop
-                    if (propThis != this && !propThis.Equals(propOther))
+                    if (!propThis.Equals(propOther))
                     {
                         hasSameValues = false;
                         break;
@@ -63,10 +62,27 @@ namespace BaseDomainObjects.ValueObjects
 
             return hashCode;
         }
-
-        public override string ToString()
+       
+        public static bool operator ==(ValueObject<T> operand1, ValueObject<T> operand2)
         {
-            return this.Value?.ToString() ?? base.ToString();
+            if (operand1 == null && operand2 == null)
+                return true;
+
+            if (operand1 == null)
+                return false;
+
+            return operand1.Equals(operand2);
+        }
+
+        public static bool operator !=(ValueObject<T> operand1, ValueObject<T> operand2)
+        {
+            if (operand1 == null && operand2 == null)
+                return true;
+
+            if (operand1 == null)
+                return false;
+
+            return !operand1.Equals(2);
         }
     }
 }

@@ -17,9 +17,7 @@ namespace SpotCharterDomain.ValueObjects
         public Overage(Enums.OverageType type, decimal value)
         {
             this.Type = type;
-            this.OverageValue = value;
-
-            this.Value = this;
+            this.OverageValue = value;            
         }
     }
 }

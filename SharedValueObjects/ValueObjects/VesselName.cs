@@ -12,10 +12,7 @@ namespace SharedShippingDomainsObjects.ValueObjects
         public VesselName(string name, string imo)
         {
             this.Name = name;
-            this.Imo = imo;
-
-            this.Value = this;
-
+            this.Imo = imo;            
         }
 
         public string Imo { get; private set; }

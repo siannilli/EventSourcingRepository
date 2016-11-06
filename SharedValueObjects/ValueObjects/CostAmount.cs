@@ -16,9 +16,7 @@ namespace SharedShippingDomainsObjects.ValueObjects
         public CostAmount(Currency currency, decimal amount)
         {
             this.Currency = currency;
-            this.Amount = amount;
-
-            this.Value = this;
+            this.Amount = amount;            
         }
 
         public override string ToString()

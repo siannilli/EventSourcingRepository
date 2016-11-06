@@ -15,9 +15,7 @@ namespace SharedShippingDomainsObjects.ValueObjects
         public CargoQuantity(string uom, decimal quantity)
         {
             this.UnitOfMeasure = uom;
-            this.Quantity = quantity;
-
-            this.Value = this;
+            this.Quantity = quantity;            
         }
     }
 }

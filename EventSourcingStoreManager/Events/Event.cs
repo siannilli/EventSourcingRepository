@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace BaseDomainObjects.Events
 {
-    public class Event : IEvent
+    public class Event : Entities.Entity<Guid>, IEvent
     {
         public Event(Guid eventId, int version)
+            : base(eventId)
         {
-            this.EventId = eventId;
+            this.Id = eventId;
             this.Version = version;
         }
 
@@ -19,8 +20,7 @@ namespace BaseDomainObjects.Events
         {
             this.Source = source;
         }
-
-        public Guid EventId { get; private set; }
+        
         public int Version { get; private set; }
 
         string IEvent.EventName
@@ -35,7 +35,7 @@ namespace BaseDomainObjects.Events
         {
             get
             {
-                return this.EventId;
+                return this.Id;
             }
 
         }

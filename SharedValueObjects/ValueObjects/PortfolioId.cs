@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace SharedShippingDomainsObjects.ValueObjects
 {
-    public class PortfolioId: BaseDomainObjects.ValueObjects.ValueObject<Guid>
+    public class PortfolioId: UniqueIdentifier
     {
         public PortfolioId(Guid value)
+            :base(value)
         {
-            this.Value = value;
+         
         }
     }
 }

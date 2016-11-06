@@ -14,9 +14,7 @@ namespace SpotCharterDomain.ValueObjects
         {
             this.FreightCalculation = Enums.FreigthCalculation.WorldScale;
             this.Flat = flat;
-            this.WorldScale = worldscale;
-
-            this.Value = this;
+            this.WorldScale = worldscale;            
         }
 
         public FreightRate (decimal lumpsum)
